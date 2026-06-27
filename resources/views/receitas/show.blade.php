@@ -36,6 +36,11 @@
                             <span class="block text-sm font-medium text-gray-500">Tipo</span>
                             <p class="mt-1 text-lg text-gray-900">{{ ucfirst($receita->tipo_receita) }}</p>
                         </div>
+
+                        <div>
+                            <span class="block text-sm font-medium text-gray-500">Status</span>
+                            <p class="mt-1 text-lg text-gray-900">{{ ucfirst($receita->status) }}</p>
+                        </div>
                     </div>
                 </div>
 

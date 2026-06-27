@@ -11,11 +11,16 @@ class Receita extends Model
 
     protected $table = 'receitas';
 
+    protected $casts = [
+        'data_registro' => 'date',
+    ];
+
     protected $fillable = [
         'nome',
         'descricao',
         'data_registro',
         'custo',
         'tipo_receita',
+        'status',
     ];
 }

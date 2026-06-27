@@ -34,5 +34,15 @@
                 <option value="salgada" {{ old('tipo_receita', $receita->tipo_receita ?? '') === 'salgada' ? 'selected' : '' }}>Salgada</option>
             </select>
         </div>
+
+        <div>
+            <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+            <select name="status" id="status"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                <option value="">Selecione</option>
+                <option value="ativo" {{ old('status', $receita->status ?? 'ativo') === 'ativo' ? 'selected' : '' }}>Ativo</option>
+                <option value="inativo" {{ old('status', $receita->status ?? '') === 'inativo' ? 'selected' : '' }}>Inativo</option>
+            </select>
+        </div>
     </div>
 </div>

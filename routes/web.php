@@ -8,6 +8,7 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('receitas/exportar/pdf', [ReceitaController::class, 'exportarPdf'])->name('receitas.exportar.pdf');
     Route::resource('receitas', ReceitaController::class);
 });
 
