@@ -88,6 +88,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey()
     {
-        return Str::lower($this->input('login')).'|'.$this->ip();
+        return Str::lower($this->input('login')) . '|' . $this->ip();
     }
 }

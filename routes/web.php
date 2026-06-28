@@ -12,4 +12,4 @@ Route::middleware('auth')->group(function () {
     Route::resource('receitas', ReceitaController::class);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -13,3 +13,7 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+/build
+.env.homolog
+.env.production
+.env.jenkins
