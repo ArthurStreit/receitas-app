@@ -45,20 +45,23 @@ COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
 COPY . .
 
-RUN set -eux; \
-    composer install \
-        --prefer-dist \
-        --no-interaction \
-        --no-progress \
-    || { \
-        echo "Download por dist falhou. Tentando instalar por source..."; \
-        rm -rf vendor; \
-        composer clear-cache; \
-        composer install \
-            --prefer-source \
+RUN --mount=type=cache,target=/tmp/composer-cache \
+    set -eux; \
+    export COMPOSER_CACHE_DIR=/tmp/composer-cache; \
+    export COMPOSER_MAX_PARALLEL_HTTP=1; \
+    success=0; \
+    for attempt in 1 2 3; do \
+        if composer install \
+            --prefer-dist \
             --no-interaction \
-            --no-progress; \
-    }
+            --no-progress; then \
+            success=1; \
+            break; \
+        fi; \
+        echo "Tentativa ${attempt} do Composer falhou. Tentando novamente..."; \
+        sleep $((attempt * 10)); \
+    done; \
+    [ "$success" -eq 1 ]
 
 # =========================================================
 # Compilação do frontend com Laravel Mix
@@ -87,24 +90,25 @@ COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
 COPY . .
 
-RUN set -eux; \
-    composer install \
-        --no-dev \
-        --prefer-dist \
-        --no-interaction \
-        --no-progress \
-        --optimize-autoloader \
-    || { \
-        echo "Download por dist falhou. Tentando instalar por source..."; \
-        rm -rf vendor; \
-        composer clear-cache; \
-        composer install \
+RUN --mount=type=cache,target=/tmp/composer-cache \
+    set -eux; \
+    export COMPOSER_CACHE_DIR=/tmp/composer-cache; \
+    export COMPOSER_MAX_PARALLEL_HTTP=1; \
+    success=0; \
+    for attempt in 1 2 3; do \
+        if composer install \
             --no-dev \
-            --prefer-source \
+            --prefer-dist \
             --no-interaction \
             --no-progress \
-            --optimize-autoloader; \
-    }
+            --optimize-autoloader; then \
+            success=1; \
+            break; \
+        fi; \
+        echo "Tentativa ${attempt} do Composer falhou. Tentando novamente..."; \
+        sleep $((attempt * 10)); \
+    done; \
+    [ "$success" -eq 1 ]
 
 COPY --from=assets /app/public /var/www/html/public
 

@@ -129,7 +129,10 @@ pipeline {
         }
 
         cleanup {
-            sh 'docker image prune -f || true'
+            sh '''
+                docker builder prune -af --filter "until=24h" || true
+                docker image prune -af --filter "until=24h" || true
+            '''
         }
     }
 }
