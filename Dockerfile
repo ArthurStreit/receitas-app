@@ -43,14 +43,12 @@ FROM php-base AS ci
 
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
-COPY composer.json composer.lock ./
+COPY . .
 
 RUN composer install \
     --prefer-dist \
     --no-interaction \
     --no-progress
-
-COPY . .
 
 # =========================================================
 # Compilação do frontend com Laravel Mix
@@ -77,7 +75,7 @@ FROM php-base AS production
 
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
-COPY composer.json composer.lock ./
+COPY . .
 
 RUN composer install \
     --no-dev \
@@ -85,8 +83,6 @@ RUN composer install \
     --no-interaction \
     --no-progress \
     --optimize-autoloader
-
-COPY . .
 
 COPY --from=assets /app/public /var/www/html/public
 
