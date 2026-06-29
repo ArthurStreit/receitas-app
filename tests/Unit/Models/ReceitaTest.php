@@ -8,21 +8,21 @@ use PHPUnit\Framework\TestCase;
 
 class ReceitaTest extends TestCase
 {
-    public function test_has_factory()
+    public function testHasFactory()
     {
         $traits = class_uses_recursive(Receita::class);
 
         $this->assertContains(HasFactory::class, $traits);
     }
 
-    public function test_tabela_receitas()
+    public function testTabelaReceitas()
     {
         $receita = new Receita();
 
         $this->assertSame('receitas', $receita->getTable());
     }
 
-    public function test_fillable_receita()
+    public function testFillableReceita()
     {
         $receita = new Receita();
 
@@ -36,7 +36,7 @@ class ReceitaTest extends TestCase
         ], $receita->getFillable());
     }
 
-    public function test_campos_fillable()
+    public function testCamposFillable()
     {
         $receita = new Receita();
 
@@ -48,7 +48,7 @@ class ReceitaTest extends TestCase
         $this->assertTrue($receita->isFillable('status'));
     }
 
-    public function test_campos_bloqueados()
+    public function testCamposBloqueados()
     {
         $receita = new Receita();
 

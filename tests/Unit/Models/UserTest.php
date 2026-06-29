@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase
 {
-    public function test_traits_autenticacao()
+    public function testTraitsAutenticacao()
     {
         $traits = class_uses_recursive(User::class);
 
@@ -19,7 +19,7 @@ class UserTest extends TestCase
         $this->assertContains(Notifiable::class, $traits);
     }
 
-    public function test_fillable_usuario()
+    public function testFillableUsuario()
     {
         $user = new User();
 
@@ -32,21 +32,21 @@ class UserTest extends TestCase
         ], $user->getFillable());
     }
 
-    public function test_login_fillable()
+    public function testLoginFillable()
     {
         $user = new User();
 
         $this->assertTrue($user->isFillable('login'));
     }
 
-    public function test_situacao_fillable()
+    public function testSituacaoFillable()
     {
         $user = new User();
 
         $this->assertTrue($user->isFillable('situacao'));
     }
 
-    public function test_hidden_usuario()
+    public function testHiddenUsuario()
     {
         $user = new User();
 
@@ -56,7 +56,7 @@ class UserTest extends TestCase
         ], $user->getHidden());
     }
 
-    public function test_oculta_dados_sensiveis()
+    public function testOcultaDadosSensiveis()
     {
         $user = new User([
             'name' => 'Maria',
@@ -73,7 +73,7 @@ class UserTest extends TestCase
         $this->assertArrayNotHasKey('remember_token', $data);
     }
 
-    public function test_cast_email_verified_at()
+    public function testCastEmailVerifiedAt()
     {
         $user = new User();
 

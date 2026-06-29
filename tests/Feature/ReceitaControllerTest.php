@@ -11,7 +11,7 @@ class ReceitaControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_authenticated_user_can_filter_receitas_by_data_registro()
+    public function testAuthenticatedUserCanFilterReceitasByDataRegistro()
     {
         $user = User::factory()->create();
 
@@ -36,7 +36,7 @@ class ReceitaControllerTest extends TestCase
         $response->assertDontSee($receitaNaoFiltrada->nome);
     }
 
-    public function test_authenticated_user_can_filter_receitas_by_status()
+    public function testAuthenticatedUserCanFilterReceitasByStatus()
     {
         $user = User::factory()->create();
 
@@ -59,7 +59,7 @@ class ReceitaControllerTest extends TestCase
         $response->assertDontSee($receitaInativa->nome);
     }
 
-    public function test_authenticated_user_can_export_receitas_to_pdf()
+    public function testAuthenticatedUserCanExportReceitasToPdf()
     {
         $user = User::factory()->create();
 

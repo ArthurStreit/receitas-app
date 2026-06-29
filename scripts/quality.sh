@@ -55,4 +55,16 @@ docker cp \
     "$CONTAINER_NAME:/tmp/phpcs.txt" \
     "$RESULT_DIRECTORY/phpcs.txt" || true
 
+echo
+echo "================ RELATÓRIO DE QUALIDADE ================"
+
+if [ -f "$RESULT_DIRECTORY/phpcs.txt" ]; then
+    cat "$RESULT_DIRECTORY/phpcs.txt"
+else
+    echo "O relatório phpcs.txt não foi gerado."
+fi
+
+echo "========================================================="
+echo
+
 exit "$QUALITY_STATUS"

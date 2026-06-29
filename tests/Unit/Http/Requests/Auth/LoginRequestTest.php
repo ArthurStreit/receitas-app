@@ -13,14 +13,14 @@ use Tests\TestCase;
 
 class LoginRequestTest extends TestCase
 {
-    public function test_authorize()
+    public function testAuthorize()
     {
         $request = $this->makeRequest();
 
         $this->assertTrue($request->authorize());
     }
 
-    public function test_login_senha()
+    public function testLoginSenha()
     {
         $request = $this->makeRequest();
 
@@ -30,7 +30,7 @@ class LoginRequestTest extends TestCase
         ], $request->rules());
     }
 
-    public function test_throttle_key_login_ip()
+    public function testThrottleKeyLoginIp()
     {
         $request = $this->makeRequest([
             'login' => 'CheF.Admin',
@@ -39,7 +39,7 @@ class LoginRequestTest extends TestCase
         $this->assertSame('chef.admin|10.0.0.1', $request->throttleKey());
     }
 
-    public function test_throttle_key_ignora_email()
+    public function testThrottleKeyIgnoraEmail()
     {
         $request = $this->makeRequest([
             'login' => 'Confeiteira',
@@ -49,7 +49,7 @@ class LoginRequestTest extends TestCase
         $this->assertSame('confeiteira|192.168.0.15', $request->throttleKey());
     }
 
-    public function test_rate_limit_disponivel()
+    public function testRateLimitDisponivel()
     {
         $request = $this->makeRequest([
             'login' => 'chef',
@@ -63,7 +63,7 @@ class LoginRequestTest extends TestCase
         $this->assertNull($request->ensureIsNotRateLimited());
     }
 
-    public function test_rate_limit_bloqueado()
+    public function testRateLimitBloqueado()
     {
         Event::fake([Lockout::class]);
 
@@ -93,7 +93,7 @@ class LoginRequestTest extends TestCase
         Event::assertDispatched(Lockout::class);
     }
 
-    public function test_authenticate_sucesso()
+    public function testAuthenticateSucesso()
     {
         $request = $this->makeRequest([
             'login' => 'chef',
@@ -123,7 +123,7 @@ class LoginRequestTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function test_authenticate_falha()
+    public function testAuthenticateFalha()
     {
         $request = $this->makeRequest([
             'login' => 'chef',
