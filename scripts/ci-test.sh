@@ -39,13 +39,20 @@ docker run -d \
     -e MYSQL_ROOT_PASSWORD=receitas_root_password \
     mysql:8.0
 
+DATABASE_READY=false
+
 for attempt in $(seq 1 30); do
     if docker exec "$DATABASE_CONTAINER" \
         mysqladmin ping \
-        -h localhost \
+        --protocol=tcp \
+        -h 127.0.0.1 \
         -u root \
         -preceitas_root_password \
-        --silent; then
+        --silent \
+        >/dev/null 2>&1; then
+
+        DATABASE_READY=true
+        echo "MySQL de testes disponível."
         break
     fi
 
@@ -53,12 +60,13 @@ for attempt in $(seq 1 30); do
     sleep 3
 done
 
-docker exec "$DATABASE_CONTAINER" \
-    mysqladmin ping \
-    -h localhost \
-    -u root \
-    -preceitas_root_password \
-    --silent
+if [ "$DATABASE_READY" != "true" ]; then
+    echo "O MySQL temporário não ficou disponível."
+
+    docker logs "$DATABASE_CONTAINER" || true
+
+    exit 1
+fi
 
 echo "Criando contêiner de testes..."
 
