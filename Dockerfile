@@ -45,10 +45,20 @@ COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
 COPY . .
 
-RUN composer install \
-    --prefer-dist \
-    --no-interaction \
-    --no-progress
+RUN set -eux; \
+    composer install \
+        --prefer-dist \
+        --no-interaction \
+        --no-progress \
+    || { \
+        echo "Download por dist falhou. Tentando instalar por source..."; \
+        rm -rf vendor; \
+        composer clear-cache; \
+        composer install \
+            --prefer-source \
+            --no-interaction \
+            --no-progress; \
+    }
 
 # =========================================================
 # Compilação do frontend com Laravel Mix
@@ -77,12 +87,24 @@ COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
 COPY . .
 
-RUN composer install \
-    --no-dev \
-    --prefer-dist \
-    --no-interaction \
-    --no-progress \
-    --optimize-autoloader
+RUN set -eux; \
+    composer install \
+        --no-dev \
+        --prefer-dist \
+        --no-interaction \
+        --no-progress \
+        --optimize-autoloader \
+    || { \
+        echo "Download por dist falhou. Tentando instalar por source..."; \
+        rm -rf vendor; \
+        composer clear-cache; \
+        composer install \
+            --no-dev \
+            --prefer-source \
+            --no-interaction \
+            --no-progress \
+            --optimize-autoloader; \
+    }
 
 COPY --from=assets /app/public /var/www/html/public
 
