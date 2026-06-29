@@ -24,6 +24,7 @@ services:
 
       CACHE_DRIVER: file
       SESSION_DRIVER: file
+      SESSION_COOKIE: ${SESSION_COOKIE}
       QUEUE_CONNECTION: sync
 
     depends_on:
