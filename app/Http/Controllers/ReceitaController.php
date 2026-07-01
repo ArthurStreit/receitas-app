@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 class ReceitaController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $receitas = $this->filtrarReceitas($request)->get();
 
         return view('receitas.index', compact('receitas'));
