@@ -17,7 +17,7 @@
             <div class="bg-white shadow-md rounded-lg overflow-hidden">
                 <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-800">Receitas Cadastradas</h1>
+                        <h1 class="text-2xl font-bold text-gray-800">Receitas Cadastradas TOP</h1>
                         <p class="text-sm text-gray-500 mt-1">Listagem das receitas doces e salgadas do sistema.</p>
                     </div>
 
